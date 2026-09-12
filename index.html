@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>我的博客</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: #f5f6f7;
+    color: #222;
+  }
+
+  .topbar {
+    background: #2f54eb;
+    color: #fff;
+    padding: 14px 16px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .topbar .title {
+    font-weight: 500;
+  }
+
+  .topbar .right {
+    font-size: 13px;
+    opacity: 0.9;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+
+  .article-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .article-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  }
+
+  .article-item a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .article-item h2 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111;
+  }
+
+  .article-item .meta {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .article-item .excerpt {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.65;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 30px 0 20px;
+    font-size: 12px;
+    color: #aaa;
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="title">全新的开始 | 我的博客</span>
+  <span class="right">···</span>
+</div>
+
+<div class="container">
+  <div class="article-list">
+
+    <div class="article-item">
+      <a href=" ">
+        <h2>全新的开始</h2>
+        <div class="meta">发表于 2026-09-12 · 阅读 10</div>
+        <div class="excerpt">
+          为了速度更迅捷，使用的是 Hugo+Go。在 Github 使用过程中，除了部分英文看不懂，还有就是在安装主题的时候一直报错，卡了很久。
+        </div>
+      </a >
+    </div>
+
+    <div class="article-item">
+      <a href="post.html">
+        <h2>我的第一篇博客</h2>
+        <div class="meta">发表于 2026-09-11</div>
+        <div class="excerpt">
+          欢迎来到我的 Hexo 蝴蝶主题博客！为什么这么难啊！！！！！一直报错，但还好，我是打不死的小强。
+        </div>
+      </a >
+    </div>
+
+    <div class="article-item">
+      <a href="post.html">
+        <h2>记录一次网页调试</h2>
+        <div class="meta">发表于 2026-09-10</div>
+        <div class="excerpt">
+          今天主要处理了页面跳转和样式适配的问题。一开始链接总是打不开，后来发现是文件名和路径没有保持一致。
+        </div>
+      </a >
+    </div>
+
+  </div>
+
+  <div class="footer">© 2026 我的博客</div>
+</div>
+
+</body>
+</html>
