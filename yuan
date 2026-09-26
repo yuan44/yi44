@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>双板块 · 极简博客</title>
+    <style>
+        /* 全局重置 + 柔和色调 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f6f4f1;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            line-height: 1.5;
+            color: #1e1e1e;
+        }
+
+        /* 主容器：两列等宽，移动端自动折行 */
+        .blog-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* 两个板块卡片 */
+        .board {
+            flex: 1 1 280px;          /* 均匀拉伸，最小宽度280px */
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 2.5rem 1.8rem 1.8rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .board:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 24px 40px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        /* 每个板块的强调色装饰 */
+        .board-tech {
+            border-top: 8px solid #2b6e8f;
+        }
+
+        .board-life {
+            border-top: 8px solid #c26b4b;
+        }
+
+        /* 板块头部 */
+        .board-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .board-icon {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+
+        .board-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .board-tech .board-title {
+            color: #1e4b5e;
+        }
+
+        .board-life .board-title {
+            color: #8e4a32;
+        }
+
+        /* 帖子列表 */
+        .post-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            flex: 1;
+        }
+
+        .post-item {
+            border-bottom: 1px dashed #e3ddd7;
+            padding-bottom: 1.2rem;
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        /* 文章链接 — 可跳转的关键 */
+        .post-link {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s ease, padding-left 0.2s ease;
+            border-radius: 12px;
+            padding: 0.25rem 0.25rem 0.25rem 0;  /* 为左侧留出小空隙, 但无背景干扰 */
+        }
+
+        /* 悬停时轻轻左移，更明显的可点击感 */
+        .post-link:hover {
+            padding-left: 0.5rem;
+        }
+
+        .post-link:hover .post-title {
+            color: #1e1e1e;
+        }
+
+        .post-link:hover .post-meta {
+            color: #3b3b3b;
+        }
+
+        /* 文章标题 */
+        .post-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: #1e1e1e;
+            transition: color 0.2s ease;
+        }
+
+        .post-meta {
+            font-size: 0.85rem;
+            color: #6b6b6b;
+            display: flex;
+            gap: 0.8rem;
+            transition: color 0.2s ease;
+        }
+
+        /* 板块专属小点缀 — 文章悬停后标题颜色微调（可选） */
+        .board-tech .post-link:hover .post-title {
+            color: #2b6e8f;
+        }
+
+        .board-life .post-link:hover .post-title {
+            color: #c26b4b;
+        }
+
+        /* “查看全部”跳转按钮 */
+        .board-footer {
+            margin-top: 2rem;
+            padding-top: 0.5rem;
+        }
+
+        .more-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            background: #f0ede9;
+            color: #1e1e1e;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .board-tech .more-link {
+            background: #e6f0f5;
+            color: #1e4b5e;
+        }
+
+        .board-tech .more-link:hover {
+            background: #2b6e8f;
+            color: white;
+            transform: translateX(4px);
+        }
+
+        .board-life .more-link {
+            background: #f5eae5;
+            color: #8e4a32;
+        }
+
+        .board-life .more-link:hover {
+            background: #c26b4b;
+            color: white;
+            transform: translateX(4px);
+        }
+
+        /* 箭头符号 */
+        .arrow {
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .more-link:hover .arrow {
+            transform: translateX(3px);
+        }
+
+        /* 底部简单署名，无跳转但让页面更完整 */
+        .page-footer {
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #bbb6b0;
+            text-align: center;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            body {
+                padding: 1.5rem 1rem;
+            }
+
+            .board {
+                padding: 2rem 1.4rem 1.4rem;
+                border-radius: 1.8rem;
+            }
+
+            .board-title {
+                font-size: 1.6rem;
+            }
+
+            .board-icon {
+                font-size: 2rem;
+            }
+
+            .post-title {
+                font-size: 1.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blog-grid">
+        <!-- 板块 1：技术笔记 -->
+        <section class="board board-tech">
+            <div class="board-header">
+                <span class="board-icon">📘</span>
+                <h2 class="board-title">技术笔记</h2>
+            </div>
+
+            <ul class="post-list">
+                <li class="post-item">
+                    <a href="#" class="post-link" target="_blank">
+                        <div class="post-title">从零构建 RAG 应用</div>
+                        <div class="post-meta">
+                            <span>2025-02-18</span>
+                            <span>8 分钟阅读</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="post-item">
+                    <a href="#" class="post-link" target="_blank">
+                        <div class="post-title">TypeScript 类型体操入门</div>
+                        <div class="post-meta">
+                            <span>2025-02-10</span>
+                            <span>6 分钟阅读</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="post-item">
+                    <a href="#" class="post-link" target="_blank">
+                        <div class="post-title">Docker 多阶段构建优化</div>
+                        <div class="post-meta">
+                            <span>2025-01-28</span>
+                            <span>5 分钟阅读</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="board-footer">
+                <a href="#" class="more-link" target="_blank">
+                    浏览全部技术文章 <span class="arrow">→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- 板块 2：生活随笔 -->
+        <section class="board board-life">
+            <div class="board-header">
+                <span class="board-icon">☕</span>
+                <h2 class="board-title">生活随笔</h2>
+            </div>
+
+            <ul class="post-list">
+                <li class="post-item">
+                    <a href="#" class="post-link" target="_blank">
+                        <div class="post-title">京都的秋天，枫叶与茶</div>
+                        <div class="post-meta">
+                            <span>2025-02-14</span>
+                            <span>4 分钟阅读</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="post-item">
+                    <a href="#" class="post-link" target="_blank">
+                        <div class="post-title">我的极简桌面改造计划</div>
+                        <div class="post-meta">
+                            <span>2025-02-07</span>
+                            <span>3 分钟阅读</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="post-item">
+                    <a href="#" class="post-link" target="_blank">
+                        <div class="post-title">每周跑步：从 1km 到 10km</div>
+                        <div class="post-meta">
+                            <span>2025-01-20</span>
+                            <span>5 分钟阅读</span>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="board-footer">
+                <a href="#" class="more-link" target="_blank">
+                    浏览全部生活文章 <span class="arrow">→</span>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- 极简的页脚说明，不干扰设计 -->
+    <div class="page-footer">
+        two boards · 点击任意标题或按钮跳转
+    </div>
+</body>
+</html>
